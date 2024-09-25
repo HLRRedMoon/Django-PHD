@@ -1,0 +1,62 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Oxygen+Mono&family=Oxygen:wght@400;700&display=swap"
+            rel="stylesheet">
+            <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@400;500&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+        <link rel="stylesheet" href="{%static 'workflow/CSS/log.css'%}">
+        <title>PHD_dignosis</title>
+    </head>
+<body>
+    <div class="return"><a class="arrow" href="{%url 'main:welcome'%}"><i class="fa-solid fa-arrow-left-long"></i><span class="arrow-note">Return to welcome page</span></a></div>
+    <section class="pass">
+        <div class="back">
+            <form method="post" action="">
+                {% csrf_token %}
+            <ui class="ch">
+                <li class="user-input">
+                    <span class="user-data">Username: </span>
+                    <input class="inp-num" type="string" name='username' min="1" max="700"  placeholder="Enter your UserName" required />
+                </li>
+                <li class="user-input">
+                    <span class="user-data">Email: </span>
+                    <input class="inp-num" type="email" name='email' min="1" max="700"  placeholder="Enter your Email" required />
+                </li>
+                <li class="user-input">
+                    <span class="user-data">your password: </span>
+                    <input class="inp-num" type="password" name='password1' min="8" max="700" step="1" placeholder="Enter your password here!" required />
+                </li>
+                <li class="user-input">
+                    <span class="user-data">Confirm Password: </span>
+                    <input class="inp-num" type="password" name='password2' min="8" max="700" step="1" placeholder="Enter your password here!" required />
+                </li>
+                <div class="bot">
+                    <button class="chois" type='submit'>Enter</button>
+                </div>
+            </form>
+            </ui>
+        </div>
+        </section>
+        <span class="sec-note">Already a registered user? <a href="{%url 'main:login'%}" class="login">Login</a></span>
+        <footer>
+            <h2 class="nametag">ABDULLAH &middot; MUHANNED</h2>
+            <ul class="footlist">
+                <li><a href="mailto:aoob2001@gmail.com"><i class="fa-solid fa-envelope" aria-hidden="true"></i> <span
+                            class="sr-only"> Email</span></a></li>
+                <li><a href="mailto:mohanadalhoqail@gmail.com"><i class="fa-solid fa-envelope" aria-hidden="true"></i> <span
+                            class="sr-only"> Email</span></a></li>
+            </ul>
+            <p class="copyright">&copy; 2024 ABDULLAH&MUHANNED. All rights reserved.</p>
+        </footer>
+        {% comment %} <script src="{% static 'workflow/js/script.js' %}"></script> {% endcomment %}
+    </body>
+</html>

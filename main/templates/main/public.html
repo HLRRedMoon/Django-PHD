@@ -1,0 +1,154 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oxygen+Mono&family=Oxygen:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'workflow/CSS/style.css' %}">
+    <title>PHD_dignosis</title>
+</head>
+
+<body>
+    <nav class="nav_bar">
+        <ul class="ulist">
+            {% if request.user.is_authenticated %}
+            <li>
+                <h1 class="username"><a href="{% url 'main:welcome' %}"><img src={% static "workflow/img/logo1.png" %} class="" alt="the logo" width=60" height="45">
+                        <span>{{request.user.username}}</span></a></h1>
+            </li>
+            <li><a href="{% url 'main:profile' %}" class="profile">Profile</a></li>
+            <li><a href="{% url 'main:history' %}" class="history">History</a></li>
+            {% else %}
+            <li>
+                <h1 class="username"><a href="{% url 'main:welcome' %}"><img src={% static "workflow/img/logo1.png" %} class="" alt="the logo" width=60" height="45">
+                        <span>Guest</span></a></h1>
+            </li>
+            <li><a href="{% url 'main:profile' %}" class="profile">Profile</a></li>
+        </ul>
+        {% endif %}
+    </nav>
+    <div class="return"><a class="arrow" href="{%url 'main:welcome'%}"><i class="fa-solid fa-arrow-left-long"></i><span class="arrow-note">Return to welcome page</span></a></div>
+    <section class="sec-att">
+        <div class="trans">
+        <div class="bullets">
+            <span class="bullet current"></span>
+            <span class="bullet"></span>
+            <span class="bullet"></span>
+            <button class="nav-arrow left-arrow" onclick="navigateLeft()">&#10094;</button>
+            <button class="nav-arrow right-arrow" onclick="navigateRight()">&#10095;</button>
+        </div>
+        <div class="empty"></div>
+    </div>
+    <form method="post" action="{% url 'main:public' %}">
+        {% csrf_token %}
+        <ul class="attri-list">
+            <div class="step" id="step1">
+                <li class="inp-wr">
+                    <div class="inp-all">
+                        <h3>Age:</h3><span class="note">here you need only to enter your Date of birth!</span>
+                    </div>
+                    <input class="inp-date" type="date" name="birthdate" step="1" placeholder="only numbers accepted"><span class='red'>*</span>
+                </li>
+                <li class="inp-wr">
+                    <div class="inp-all">
+                        <h3> Height: </h3> <span class="note">your height!</span>
+                    </div>
+                    <input class="inp-num" type="number" name="height" min="120" max="220" step="1" placeholder="only numbers in cm" ><span class='red'>*</span>
+                </li>
+                <li class="inp-wr">
+                    <div class="inp-all">
+                        <h3> Weight: </h3> <span class="note">your weight!</span>
+                    </div>
+                    <input class="inp-num" type="number" name="weight" min="20" max="520" step="0.1" placeholder="only numbers in kg" ><span class='red'>*</span>
+                </li>
+                <!-- <div class="sub-div"> -->
+                <!-- </div> -->
+                <div class="notes">
+                    <span class="sec-note">all fields muts be filled</span>
+                    <span class="red sec-note">the star is for the fields that must be filled with inputes</span>
+                    </div>
+             </div>
+            <div class="step hidden" id="step2">
+                <li class="inp-wr">
+                    <div class="inp-all">
+                        <h3> Systolic blood pressure: </h3> <span class="note">ranges are 120-180 lower or higher!</span>
+                    </div>
+                    <input class="inp-num" type="number" name="ap_hi" min="20" max="220" step="1" placeholder="only numbers" ><span class='red'>*</span>
+                </li>
+                <li class="inp-wr">
+                    <div class="inp-all">
+                        <h3> Diastolic blood pressure: </h3> <span class="note">ranges are 80-120 lower or higher!</span>
+                    </div>
+                    <input class="inp-num" type="number" name="ap_lo" min="20" max="220" step="1" placeholder="only numbers" ><span class='red'>*</span>
+                </li>
+                <li class="opti">
+                    <div class="inp-all">
+                        <h3>Cholesterol:</h3> <span class="note">less then 200 mg/dL = normal,
+                            200-239 mg/dL = above normal,
+                            240 mg/dL or greater = well above normal.</span>
+                    </div>
+                    <select class="inp-sel" name="Cholesterol">
+                        <option value="1">Normal</option>
+                        <option value="2">Above Normal</option>
+                        <option value="3">Well Above Normal</option>
+                    </select>
+                </li>
+            </div>
+            <div class="step hidden" id="step3">
+                <li class="chi">
+                    <div class="inp-all">
+                        <h3>Smoking:</h3><span class="note">Are you a smoker or not?</span>
+                    </div>
+                    <input class="chi-rad" type="radio" name="smoke" value="1" >True
+                    <input class="chi-rad" type="radio" name="smoke" value="0" >False
+                    <span class='red'>*</span>
+                </li>
+                <li class="chi">
+                    <div class="inp-all">
+                        <h3>Alcohol intake:</h3><span class="note">Are you Drinking or not?</span>
+                    </div>
+                    <input class="chi-rad" type="radio" name="alco" value="1" >True
+                    <input class="chi-rad" type="radio" name="alco" value="0" >False
+                    <span class='red'>*</span>
+                </li>
+                <li class="chi">
+                    <div class="inp-all">
+                        <h3>Physical Activity:</h3><span class="note">do you exercise or doing any physical activity?</span>
+                    </div>
+                    <input class="chi-rad" type="radio" name="active" value="1" >True
+                    <input class="chi-rad" type="radio" name="active" value="0" >False
+                    <span class='red'>*</span>
+                </li>
+                <!-- Error Message Display Container -->
+                <div id="errorDisplay" class="block hidden"></div>
+                <button class="sub-but" type='submit'>Submit</button>
+            </div>
+        </ul>
+    </form>
+    </section>
+    <!-- <div class="sub-div"> -->
+
+    <!-- </div> -->
+
+    <footer>
+        <h2 class="nametag">ABDULLAH &middot; MUHANNED</h2>
+        <ul class="footlist">
+            <li><a href="mailto:aoob2001@gmail.com"><i class="fa-solid fa-envelope" aria-hidden="true"></i> <span
+                        class="sr-only"> Email</span></a></li>
+            <li><a href="mailto:mohanadalhoqail@gmail.com"><i class="fa-solid fa-envelope" aria-hidden="true"></i> <span
+                        class="sr-only"> Email</span></a></li>
+        </ul>
+        <p class="copyright">&copy; 2024 ABDULLAH&MUHANNED. All rights reserved.</p>
+    </footer>
+    <!-- <script src="https://kit.fontawesome.com/484bd66d3c.js" crossorigin="anonymous"></script> -->
+    <script src="{% static 'workflow/js/script.js' %}"></script>
+</body>
+
+</html>
